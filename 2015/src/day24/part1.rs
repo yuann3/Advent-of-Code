@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use anyhow::Result;
 use aoc_lib::read_one_per_line;
 
@@ -12,7 +13,7 @@ pub fn solve() -> Result<u32> {
 
         generate_combination(
             &weights,
-            size,
+            group_size,
             target_weight,
             0,
             0,
@@ -27,6 +28,39 @@ pub fn solve() -> Result<u32> {
     }
 
     Ok(target_weight)
+}
+
+fn can_split(weights: &[u32], use_indices: &[usize], target: u32) -> bool {
+    let mut remaining = Vec::new();
+    let used_set: HashSet<usize> = use_indices.iter().cloned().collect();
+
+    for (i, &weight) in weights.iter().enumerate() {
+        if !used_set.contains(&i) {
+            remaining.push(weight);
+        }
+    }
+
+    let remaining_sum: u32 = remaining.iter().sum();
+    if remaining_sum != 2 * target {
+        return false;
+    }
+    can_sum_to_target(&remaining, target)
+
+}
+
+fn can_sum_to_target(weights: &[u32], target: u32) -> bool {
+    let mut dp = vec![false; (target + 1) as usize];
+    dp[0] = true;
+
+    for &weight in weights {
+        for sum in (weight..=target).rev() {
+            if dp[(sum - weight) as usize] {
+                dp[sum as usize] = true;
+            }
+        }
+    }
+
+    dp[target as usize]
 }
 
 fn generate_combination(
@@ -64,6 +98,6 @@ fn generate_combination(
             results,
         );
 
-        current.pop()
+       current.pop();
     }
 }
