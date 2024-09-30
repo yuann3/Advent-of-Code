@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "aoc-lib",
+    "2015",
+]
+resolver = "2"
