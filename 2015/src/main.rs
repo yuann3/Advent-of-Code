@@ -1,13 +1,14 @@
 use std::env;
-use std::io;
+use std::error::Error;
 
 mod day1;
 mod day2;
 mod day3;
 mod day4;
 mod day5;
+mod day6;
 
-fn main() -> io::Result<()> {
+fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
 
     if args.len() > 1 {
@@ -20,7 +21,7 @@ fn main() -> io::Result<()> {
     Ok(())
 }
 
-fn run_day(day: &str) -> io::Result<()> {
+fn run_day(day: &str) -> Result<(), Box<dyn Error>> {
     match day {
         "1" => {
             println!("Day 1:");
@@ -49,15 +50,15 @@ fn run_day(day: &str) -> io::Result<()> {
         }
         "6" => {
             println!("Day 6:");
-            println!("Part 1: {}", day5::part1::solve()?);
-            println!("Part 2: {}", day5::part2::solve()?);
+            println!("Part 1: {}", day6::part1::solve()?);
+            //println!("Part 2: {}", day6::part2::solve()?);
         }
         _ => println!("Day not implemented"),
     }
     Ok(())
 }
 
-fn run_all_days() -> io::Result<()> {
+fn run_all_days() -> Result<(), Box<dyn Error>> {
     for day in 1..=25 {
         if let Err(e) = run_day(&day.to_string()) {
             eprintln!("Error running day {}: {}", day, e);
