@@ -47,6 +47,11 @@ fn run_day(day: &str) -> io::Result<()> {
             println!("Part 1: {}", day5::part1::solve()?);
             println!("Part 2: {}", day5::part2::solve()?);
         }
+        "6" => {
+            println!("Day 6:");
+            println!("Part 1: {}", day5::part1::solve()?);
+            println!("Part 2: {}", day5::part2::solve()?);
+        }
         _ => println!("Day not implemented"),
     }
     Ok(())
