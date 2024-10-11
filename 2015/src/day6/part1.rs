@@ -1,4 +1,4 @@
-use aoc_lib::{self, read_lines};
+use aoc_lib::read_lines;
 use std::error::Error;
 use std::{collections::HashMap, usize};
 
