@@ -51,7 +51,7 @@ fn run_day(day: &str) -> Result<(), Box<dyn Error>> {
         "6" => {
             println!("Day 6:");
             println!("Part 1: {}", day6::part1::solve()?);
-            //println!("Part 2: {}", day6::part2::solve()?);
+            println!("Part 2: {}", day6::part2::solve()?);
         }
         _ => println!("Day not implemented"),
     }
