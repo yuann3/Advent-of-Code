@@ -1,0 +1,12 @@
+[package]
+name = "aoc-2019"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aoc-lib = { path = "../aoc-lib" }
+md-5 = "0.10.6"
+
+[[bin]]
+name = "main"
+path = "src/main.rs"
