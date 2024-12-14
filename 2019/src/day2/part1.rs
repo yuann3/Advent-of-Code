@@ -19,13 +19,13 @@ pub fn solve() -> io::Result<i32> {
                 let pos2 = program[position + 2] as usize;
                 let pos3 = program[position + 3] as usize;
                 program[pos3] = program[pos1] + program[pos2];
-            },
+            }
             2 => {
                 let pos1 = program[position + 1] as usize;
                 let pos2 = program[position + 2] as usize;
                 let pos3 = program[position + 3] as usize;
                 program[pos3] = program[pos1] * program[pos2];
-            },
+            }
             _ => panic!("Unknow opcode: {}", program[position]),
         }
         position += 4;
