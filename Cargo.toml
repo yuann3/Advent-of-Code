@@ -3,5 +3,6 @@ members = [
     "aoc-lib",
     "2015",
     "2019",
+    "2024",
 ]
 resolver = "2"
