@@ -2,6 +2,9 @@ use std::env;
 use std::error::Error;
 
 mod day1;
+mod day2;
+mod day3;
+mod day4;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
@@ -21,6 +24,18 @@ fn run_day(day: &str) -> Result<(), Box<dyn Error>> {
         "1" => {
             println!("Day 1:");
             println!("Part 1: {}", day1::part1::solve()?);
+        }
+        "2" => {
+            println!("Day 2:");
+            println!("Part 1: {}", day2::part1::solve()?);
+        }
+        "3" => {
+            println!("Day 3:");
+            println!("Part 1: {}", day3::part1::solve()?);
+        }
+        "4" => {
+            println!("Day 4:");
+            println!("Part 1: {}", day4::part1::solve()?);
         }
         _ => println!("Day not implemented"),
     }
