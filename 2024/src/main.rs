@@ -5,6 +5,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day5;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<String> = env::args().collect();
@@ -37,13 +38,17 @@ fn run_day(day: &str) -> Result<(), Box<dyn Error>> {
             println!("Day 4:");
             println!("Part 1: {}", day4::part1::solve()?);
         }
+        "5" => {
+            println!("Day 5:");
+            println!("Part 1: {}", day5::part1::solve()?);
+        }
         _ => println!("Day not implemented"),
     }
     Ok(())
 }
 
 fn run_all_days() -> Result<(), Box<dyn Error>> {
-    for day in 1..=25 {
+    for day in 1..=5 {
         if let Err(e) = run_day(&day.to_string()) {
             eprintln!("Error running day {}: {}", day, e);
         }
