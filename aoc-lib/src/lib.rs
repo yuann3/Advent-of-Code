@@ -31,6 +31,46 @@ pub fn read_lines<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
     })
 }
 
+/// Reads a file and returns all lines, including empty ones, as a vector of strings.
+///
+/// This function is particularly useful when working with files that use empty lines
+/// as meaningful separators between sections of content. Unlike `read_lines`, which
+/// filters out empty lines, this function preserves them.
+///
+/// # Arguments
+///
+/// * `path` - Any value that can be converted into a Path (like &str or String).
+///   The path is relative to the current working directory.
+///
+/// # Returns
+///
+/// * `Result<Vec<String>>` - If successful, returns a vector where each element is
+///   a line from the file (including empty lines). If an error occurs (e.g., file
+///   not found or permission denied), returns an IO error.
+///
+/// # Examples
+///
+/// ```
+/// use aoc_lib::read_lines_keep_empty;
+///
+/// // Reading a file with section separators
+/// let lines = read_lines_keep_empty("input.txt").unwrap();
+/// // If input.txt contains:
+/// // Section 1
+/// //
+/// // Section 2
+/// // The vector will contain 3 elements, including the empty line
+/// ```
+///
+/// # Technical Details
+///
+/// The function uses `read_to_string` internally to read the entire file into memory,
+/// then splits it into lines. Each line is converted to a String, preserving empty
+/// lines. The newline characters themselves are not included in the resulting strings.
+pub fn read_lines_keep_empty<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
+    read_to_string(path).map(|content| content.lines().map(String::from).collect())
+}
+
 /// Reads a file and returns its content as a vector of characters.
 ///
 /// # Arguments
