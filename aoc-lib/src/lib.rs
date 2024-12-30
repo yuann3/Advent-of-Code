@@ -3,6 +3,9 @@ use std::io::{self, Result};
 use std::path::Path;
 use std::str::FromStr;
 
+pub mod benchmark;
+pub use benchmark::*;
+
 /// Reads lines from a file and returns a vector of non-empty strings.
 ///
 /// # Arguments
