@@ -1,10 +1,8 @@
-use aoc_lib::benchmark::{benchmark, print_benchmark, store_benchmark};
+use aoc_lib::benchmark::{benchmark, print_benchmark, store_benchmark, SAMPLE_SIZE};
 use clap::Parser;
 use colored::*;
 use std::process::Command;
 use std::time::Instant;
-
-const SAMPLE_SIZE: usize = 100; // Reduced from 10000 for initial testing
 
 #[derive(Parser)]
 #[command(name = "cargo-time")]
@@ -25,9 +23,17 @@ struct Cli {
     store: bool,
 }
 
+fn extract_part_result(output: &str, part: u8) -> String {
+    let prefix = format!("Part {}: ", part);
+    output
+        .lines()
+        .find(|line| line.contains(&prefix))
+        .and_then(|line| line.split(&prefix).nth(1))
+        .unwrap_or("Error: Could not parse output")
+        .to_string()
+}
+
 fn run_solution(day: u32, part: u8) -> String {
-    println!("Running day {} part {}...", day, part);
-    
     let cmd = Command::new("cargo")
         .args(["run", "--release", &format!("day{}", day), &format!("part{}", part)])
         .current_dir(std::env::current_dir().unwrap())
@@ -44,7 +50,8 @@ fn run_solution(day: u32, part: u8) -> String {
                 );
                 std::process::exit(1);
             }
-            String::from_utf8_lossy(&output.stdout).trim().to_string()
+            let output_str = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            extract_part_result(&output_str, part)
         }
         Err(e) => {
             eprintln!("Failed to execute command: {}", e);
