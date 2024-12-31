@@ -1,0 +1,22 @@
+{
+  "3": {
+    "part1": {
+      "duration_ns": 97237842.91,
+      "samples": 1000,
+      "result": "Day 3:\nPart 1: 167650499"
+    },
+    "part2": null
+  },
+  "1": {
+    "part1": {
+      "duration_ns": 86213707.49,
+      "samples": 100,
+      "result": "Day 1:\nPart 1: 1580061"
+    },
+    "part2": {
+      "duration_ns": 90129113.4,
+      "samples": 100,
+      "result": "Day 1:\nPart 1: 1580061"
+    }
+  }
+}
