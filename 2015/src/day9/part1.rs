@@ -22,8 +22,42 @@ pub fn solve() -> io::Result<usize> {
         cities.insert(destination.to_string());
 
         distances.insert((source.to_string(), destination.to_string()), distance);
-        distances.insert((distance.to_string(), source.to_string()), distance);
+        distances.insert((destination.to_string(), source.to_string()), distance);
     }
 
-    Ok(cities.len())
+    let cities_vec: Vec<String> = cities.into_iter().collect();
+    let n = cities_vec.len();
+
+    let mut indices: Vec<usize> = (0..n).collect();
+    let mut c: Vec<usize> = vec![0; n];
+    let mut shortest_distance = usize::MAX;
+    let mut i = 0;
+
+    while i < n {
+        if c[i] < i {
+            let to_swap = if i % 2 == 0 { 0 } else { c[i] };
+            indices.swap(to_swap, i);
+
+            let mut total_distance = 0;
+
+            for j in 0..n - 1 {
+                let current_city = &cities_vec[indices[j]];
+                let next_city = &cities_vec[indices[j + 1]];
+
+                if let Some(&dist) = distances.get(&(current_city.clone(), next_city.clone())) {
+                    total_distance += dist;
+                }
+            }
+
+            shortest_distance = shortest_distance.min(total_distance);
+
+            c[i] += 1;
+            i = 0;
+        } else {
+            c[i] = 0;
+            i += 1;
+        }
+    }
+
+    Ok(shortest_distance)
 }
