@@ -31,7 +31,7 @@ fn count_mem_chars(s: &str) -> usize {
                         }
                         'x' => {
                             chars.next();
-                            if let (Some(hex1), Some(hex2)) = (chars.next(), chars.next()) {
+                            if let (Some(_hex1), Some(_hex2)) = (chars.next(), chars.next()) {
                                 count += 1;
                             }
                         }

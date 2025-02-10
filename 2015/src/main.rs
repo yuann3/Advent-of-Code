@@ -2,6 +2,7 @@ use std::env;
 use std::error::Error;
 
 mod day1;
+mod day10;
 mod day2;
 mod day3;
 mod day4;
@@ -70,6 +71,11 @@ fn run_day(day: &str) -> Result<(), Box<dyn Error>> {
             println!("Day 9:");
             println!("Part 1: {}", day9::part1::solve()?);
             println!("Part 2: {}", day9::part2::solve()?);
+        }
+        "10" => {
+            println!("Day 10:");
+            println!("Part 1: {}", day10::part1::solve()?);
+            println!("Part 2: {}", day10::part2::solve()?);
         }
         _ => println!("Day not implemented"),
     }

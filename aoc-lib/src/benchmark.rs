@@ -80,7 +80,7 @@ pub fn format_duration(ns: f64) -> String {
     }
 }
 
-pub fn print_benchmark(day: u32, part: u8, result: &str, duration_ns: f64) {
+pub fn print_benchmark(_day: u32, part: u8, result: &str, duration_ns: f64) {
     let duration_str = format_duration(duration_ns);
     println!(
         "Part {}: {} ({} @ {} samples)",
