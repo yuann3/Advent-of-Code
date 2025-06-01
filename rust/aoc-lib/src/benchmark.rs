@@ -5,7 +5,7 @@ use std::fs;
 use std::time::{Duration, Instant};
 
 // how many samples to run
-pub const SAMPLE_SIZE: usize = 1000;
+pub const SAMPLE_SIZE: usize = 100;
 
 const BENCH_FILE: &str = "benchmarks.json";
 
@@ -89,4 +89,5 @@ pub fn print_benchmark(_day: u32, part: u8, result: &str, duration_ns: f64) {
         duration_str.bright_blue(),
         SAMPLE_SIZE
     );
-} 
+}
+

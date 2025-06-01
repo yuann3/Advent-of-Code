@@ -9,10 +9,10 @@ use std::time::Instant;
 struct Cli {
     /// The subcommand name (ignored)
     #[arg(hide = true)]
-    _subcommand: Option<String>,
+    _subcommand: String,
 
-    /// The day to benchmark
-    day: u32,
+    /// The day to benchmark (e.g., day2 or just 2)
+    day_arg: String,
 
     /// Run both parts
     #[arg(long)]
@@ -21,6 +21,14 @@ struct Cli {
     /// Store the benchmark results
     #[arg(long)]
     store: bool,
+}
+
+fn parse_day(day_arg: &str) -> Result<u32, String> {
+    if day_arg.starts_with("day") {
+        day_arg[3..].parse().map_err(|_| format!("Invalid day format: {}", day_arg))
+    } else {
+        day_arg.parse().map_err(|_| format!("Invalid day number: {}", day_arg))
+    }
 }
 
 fn extract_part_result(output: &str, part: u8) -> String {
@@ -33,19 +41,23 @@ fn extract_part_result(output: &str, part: u8) -> String {
         .to_string()
 }
 
-fn run_solution(day: u32, part: u8) -> String {
+fn run_solution(year: &str, day: u32, part: u8) -> String {
+    let year_dir = format!("{}", year);
+    let day_arg = format!("day{}", day);
+    
     let cmd = Command::new("cargo")
-        .args(["run", "--release", &format!("day{}", day), &format!("part{}", part)])
-        .current_dir(std::env::current_dir().unwrap())
+        .args(["run", "--release", "--bin", "main", &day_arg])
+        .current_dir(&year_dir)
         .output();
 
     match cmd {
         Ok(output) => {
             if !output.status.success() {
                 eprintln!(
-                    "Error running day {} part {}:\n{}",
+                    "Error running day {} part {} in year {}:\n{}",
                     day,
                     part,
+                    year,
                     String::from_utf8_lossy(&output.stderr)
                 );
                 std::process::exit(1);
@@ -61,7 +73,10 @@ fn run_solution(day: u32, part: u8) -> String {
 }
 
 fn main() {
-    let Cli { day, all, store, .. } = Cli::parse();
+    let Cli { _subcommand, day_arg, all, store } = Cli::parse();
+
+    let day = parse_day(&day_arg).unwrap();
+    let year = &_subcommand;
 
     println!("\n{}", format!("Day {:02}", day).bright_green().bold());
     println!("{}", "-".repeat(6).bright_black());
@@ -70,12 +85,12 @@ fn main() {
 
     // First run to verify the solution works
     println!("Verifying solution...");
-    let initial_result = run_solution(day, 1);
+    let initial_result = run_solution(year, day, 1);
     println!("Initial run successful, result: {}", initial_result);
     println!("Starting benchmark with {} samples...", SAMPLE_SIZE);
 
     // Run Part 1 benchmark
-    let (result, duration) = benchmark(|| run_solution(day, 1), SAMPLE_SIZE);
+    let (result, duration) = benchmark(|| run_solution(year, day, 1), SAMPLE_SIZE);
     print_benchmark(day, 1, &result, duration);
     if store {
         store_benchmark(day, 1, result, duration);
@@ -84,11 +99,11 @@ fn main() {
     // Run Part 2 if --all is specified
     if all {
         println!("\nStarting Part 2...");
-        let initial_result = run_solution(day, 2);
+        let initial_result = run_solution(year, day, 2);
         println!("Initial Part 2 run successful, result: {}", initial_result);
         println!("Starting Part 2 benchmark with {} samples...", SAMPLE_SIZE);
         
-        let (result, duration) = benchmark(|| run_solution(day, 2), SAMPLE_SIZE);
+        let (result, duration) = benchmark(|| run_solution(year, day, 2), SAMPLE_SIZE);
         print_benchmark(day, 2, &result, duration);
         if store {
             store_benchmark(day, 2, result, duration);
