@@ -1,5 +1,5 @@
 use aoc_lib::read_lines;
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 
 pub struct Prism {
     pub length: i32,
