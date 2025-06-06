@@ -6,6 +6,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 mod day2;
 mod day3;
 mod day4;
@@ -94,6 +95,11 @@ fn run_day(day: &str) -> Result<()> {
             println!("Day 13:");
             println!("Part 1: {}", day13::part1::solve()?);
             println!("Part 2: {}", day13::part2::solve()?);
+        }
+        "14" => {
+            println!("Day 14:");
+            println!("Part 1: {}", day14::part1::solve()?);
+            println!("Part 2: {}", day14::part2::solve()?);
         }
         _ => println!("Day not implemented"),
     }
