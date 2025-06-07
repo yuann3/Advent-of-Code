@@ -1,5 +1,4 @@
 \--- Day 14: Reindeer Olympics ---
-----------
 
 This year is the Reindeer Olympics! Reindeer can fly at high speeds, but must rest occasionally to recover their energy. Santa would like to know which of his reindeer is fastest, and so he has them race.
 
@@ -26,4 +25,25 @@ Given the descriptions of each reindeer (in your puzzle input), after exactly `2
 
 To begin, [get your puzzle input](14/input).
 
-Answer:
+--- Part Two ---
+Seeing how reindeer move in bursts, Santa decides he's not pleased with the old scoring system.
+
+Instead, at the end of each second, he awards one point to the reindeer currently in the lead. (If there are multiple reindeer tied for the lead, they each get one point.) He keeps the traditional 2503 second time limit, of course, as doing otherwise would be entirely ridiculous.
+
+Given the example reindeer from above, after the first second, Dancer is in the lead and gets one point. He stays in the lead until several seconds into Comet's second burst: after the 140th second, Comet pulls into the lead and gets his first point. Of course, since Dancer had been in the lead for the 139 seconds before that, he has accumulated 139 points by the 140th second.
+
+After the 1000th second, Dancer has accumulated 689 points, while poor Comet, our old champion, only has 312. So, with the new scoring system, Dancer would win (if the race ended at 1000 seconds).
+
+Again given the descriptions of each reindeer (in your puzzle input), after exactly 2503 seconds, how many points does the winning reindeer have?
+
+```
+Vixen can fly 8 km/s for 8 seconds, but then must rest for 53 seconds.
+Blitzen can fly 13 km/s for 4 seconds, but then must rest for 49 seconds.
+Rudolph can fly 20 km/s for 7 seconds, but then must rest for 132 seconds.
+Cupid can fly 12 km/s for 4 seconds, but then must rest for 43 seconds.
+Donner can fly 9 km/s for 5 seconds, but then must rest for 38 seconds.
+Dasher can fly 10 km/s for 4 seconds, but then must rest for 37 seconds.
+Comet can fly 3 km/s for 37 seconds, but then must rest for 76 seconds.
+Prancer can fly 9 km/s for 12 seconds, but then must rest for 97 seconds.
+Dancer can fly 37 km/s for 1 seconds, but then must rest for 36 seconds.
+```
