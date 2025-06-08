@@ -1,6 +1,13 @@
 \--- Day 15: Science for Hungry People ---
 ----------
 
+```input
+Sprinkles: capacity 2, durability 0, flavor -2, texture 0, calories 3
+Butterscotch: capacity 0, durability 5, flavor -3, texture 0, calories 3
+Chocolate: capacity 0, durability 0, flavor 5, texture -1, calories 8
+Candy: capacity 0, durability -1, flavor 0, texture 5, calories 8
+```
+
 Today, you set out on the task of perfecting your milk-dunking cookie recipe.
 All you have to do is find the right balance of ingredients.
 
@@ -47,4 +54,11 @@ score* of the highest-scoring cookie you can make?
 
 To begin, [get your puzzle input](input/day15.in).
 
-Answer:
+--- Part Two ---
+Your cookie recipe becomes wildly popular! Someone asks if you can make another recipe that has exactly 500 calories per cookie (so they can use it as a meal replacement). Keep the rest of your award-winning process the same (100 teaspoons, same ingredients, same scoring system).
+
+For example, given the ingredients above, if you had instead selected 40 teaspoons of butterscotch and 60 teaspoons of cinnamon (which still adds to 100), the total calorie count would be `40*8 + 60*3 = 500`. The total score would go down, though: only 57600000, the best you can do in such trying circumstances.
+
+Given the ingredients in your kitchen and their properties, what is the total score of the highest-scoring cookie you can make with a calorie total of 500?
+
+
