@@ -16,6 +16,7 @@ mod day12;
 mod day13;
 mod day14;
 mod day15;
+mod day16;
 
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -106,6 +107,11 @@ fn run_day(day: &str) -> Result<()> {
             println!("Day 15:");
             println!("Part 1: {}", day15::part1::solve()?);
             println!("Part 2: {}", day15::part2::solve()?);
+        }
+        "16" => {
+            println!("Day 16:");
+            println!("Part 1: {}", day16::part1::solve()?);
+            println!("Part 2: {}", day16::part2::solve()?);
         }
         _ => println!("Day not implemented"),
     }
