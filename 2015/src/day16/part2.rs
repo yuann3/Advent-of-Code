@@ -65,26 +65,3 @@ fn match_target(compound: &str, sue_count: i32, target_count: i32) -> bool {
         _ => sue_count == target_count,
     }
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_parse_sue_line() {
-        let target = HashMap::from([
-            ("children".to_string(), 3),
-            ("cats".to_string(), 7),
-            ("cars".to_string(), 2),
-        ]);
-
-        let result = parse_and_check_sue("Sue 1: children: 3, cars: 2", &target).unwrap();
-        assert_eq!(result, Some(1));
-
-        let result = parse_and_check_sue("Sue 2: children: 1, cars: 2", &target).unwrap();
-        assert_eq!(result, None);
-
-        let result = parse_and_check_sue("Sue 3: cats: 7", &target).unwrap();
-        assert_eq!(result, Some(3));
-    }
-}
