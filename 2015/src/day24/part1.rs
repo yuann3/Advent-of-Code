@@ -1,11 +1,16 @@
-use std::collections::HashSet;
 use anyhow::Result;
 use aoc_lib::read_one_per_line;
+use std::collections::HashSet;
 
-pub fn solve() -> Result<u32> {
-    let weights = read_one_per_line("input/day24.in")?;
-    let total_weigth: u32 = weights.iter().sum();
-    let target_weight = total_weigth / 3;
+pub fn solve() -> Result<u64> {
+    let weights: Vec<u32> = read_one_per_line("input/day24.in")?;
+    let total_weight: u32 = weights.iter().sum();
+
+    if total_weight % 3 != 0 {
+        return Err(anyhow::anyhow!("Total weight not divisible by 3"));
+    }
+
+    let target_weight = total_weight / 3;
 
     for group_size in 1..weights.len() {
         let mut combinations = Vec::new();
@@ -22,12 +27,28 @@ pub fn solve() -> Result<u32> {
         );
 
         if !combinations.is_empty() {
-            // TODO: Next step - validation and quantum entanglement
-            break;
+            let valid_combinations: Vec<_> = combinations
+                .into_iter()
+                .filter(|combo| can_split(&weights, combo, target_weight))
+                .collect();
+
+            if !valid_combinations.is_empty() {
+                let min_quantum_entanglement = valid_combinations
+                    .iter()
+                    .map(|combo| calculate_quantum_entanglement(&weights, combo))
+                    .min()
+                    .unwrap();
+
+                return Ok(min_quantum_entanglement);
+            }
         }
     }
 
-    Ok(target_weight)
+    Ok(0)
+}
+
+fn calculate_quantum_entanglement(weights: &[u32], indices: &[usize]) -> u64 {
+    indices.iter().map(|&i| weights[i] as u64).product()
 }
 
 fn can_split(weights: &[u32], use_indices: &[usize], target: u32) -> bool {
@@ -45,7 +66,6 @@ fn can_split(weights: &[u32], use_indices: &[usize], target: u32) -> bool {
         return false;
     }
     can_sum_to_target(&remaining, target)
-
 }
 
 fn can_sum_to_target(weights: &[u32], target: u32) -> bool {
@@ -98,6 +118,6 @@ fn generate_combination(
             results,
         );
 
-       current.pop();
+        current.pop();
     }
 }
