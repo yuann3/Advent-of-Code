@@ -6,7 +6,7 @@ pub fn solve() -> Result<i32> {
 
     let mut x: i32 = 0;
     let mut y: i32 = 0;
-    let mut dir: i32 = 0;
+    let mut dir: i32 = 0; // 0: N, 1: E, 2: S, 3: W
 
     for instruction in line.split(", ") {
         let turn = instruction.chars().next().unwrap();
@@ -19,13 +19,12 @@ pub fn solve() -> Result<i32> {
         }
 
         match dir {
-            1 => y += blocks,
-            2 => x += blocks,
-            3 => y -= blocks,
-            4 => x -= blocks,
+            0 => y += blocks, // North
+            1 => x += blocks, // East
+            2 => y -= blocks, // South
+            3 => x -= blocks, // West
             _ => unreachable!(),
         }
-
     }
 
     Ok(x.abs() + y.abs())
