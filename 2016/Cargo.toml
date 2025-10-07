@@ -6,8 +6,8 @@ edition = "2021"
 [dependencies]
 aoc-lib = { path = "../aoc-lib" }
 anyhow = "1.0"
-md-5 = "0.10.6"
 regex = "1.11.1"
+md5 = "0.8.0"
 
 [[bin]]
 name = "main"
