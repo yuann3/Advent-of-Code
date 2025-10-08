@@ -1,6 +1,6 @@
-use std::collections::HashSet;
 use anyhow::Result;
 use aoc_lib::read_lines;
+use std::collections::HashSet;
 
 pub fn solve() -> Result<i32> {
     let line = &read_lines("input/day1.in")?[0];

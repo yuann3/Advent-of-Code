@@ -14,9 +14,7 @@ pub fn solve() -> Result<usize> {
     let valid_trangle_cout = numbers
         .chunks_exact(3)
         .flat_map(|chunk| {
-            (0..3).map(move |col_idx| {
-                vec![chunk[0][col_idx], chunk[1][col_idx], chunk[2][col_idx]]
-            })
+            (0..3).map(move |col_idx| vec![chunk[0][col_idx], chunk[1][col_idx], chunk[2][col_idx]])
         })
         .filter(|sides| {
             let mut sorted_sides = sides.clone();

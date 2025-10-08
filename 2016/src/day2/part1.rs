@@ -9,13 +9,13 @@ pub fn solve() -> Result<String> {
 
     for line in lines {
         for instruction in line.chars() {
-           match instruction {
-               'U' => y = (y - 1).max(0),
-               'D' => y = (y + 1).min(2),
-               'L' => x = (x - 1).max(0),
-               'R' => x = (x + 1).min(2),
-               _ => (),
-           }
+            match instruction {
+                'U' => y = (y - 1).max(0),
+                'D' => y = (y + 1).min(2),
+                'L' => x = (x - 1).max(0),
+                'R' => x = (x + 1).min(2),
+                _ => (),
+            }
         }
 
         let digit = 1 + x + y * 3;
