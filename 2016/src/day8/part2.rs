@@ -1,10 +1,10 @@
 use anyhow::{anyhow, Context, Result};
 use aoc_lib::read_lines;
 
-const WIDTH: usize = 5;
+const WIDTH: usize = 50;
 const HEIGHT: usize = 6;
 
-pub fn solve() -> Result<usize> {
+pub fn solve() -> Result<String> {
     let lines = read_lines("input/day8.in")?;
 
     let mut screen: Vec<Vec<u8>> = vec![vec![0; WIDTH]; HEIGHT];
@@ -43,6 +43,12 @@ pub fn solve() -> Result<usize> {
         }
     }
 
-    let lit_count: usize = screen.iter().flatten().map(|&p| p as usize).sum();
-    Ok(lit_count)
+    let mut display = String::new();
+    for row in screen {
+        for &pixel in &row {
+            display.push(if pixel == 1 { '#' } else { '.' });
+        }
+        display.push('\n');
+    }
+    Ok(display)
 }
