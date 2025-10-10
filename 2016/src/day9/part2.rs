@@ -1,54 +1,60 @@
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result};
 use aoc_lib::read_lines;
 
-const WIDTH: usize = 50;
-const HEIGHT: usize = 6;
+fn decompressed_length(input: &str) -> Result<u64> {
+    let mut length: u64 = 0;
+    let mut i: usize = 0;
 
-pub fn solve() -> Result<String> {
-    let lines = read_lines("input/day8.in")?;
-
-    let mut screen: Vec<Vec<u8>> = vec![vec![0; WIDTH]; HEIGHT];
-
-    for line in lines {
-        let parts: Vec<&str> = line.split_whitespace().collect();
-        match parts[0] {
-            "rect" => {
-                let ab: Vec<&str> = parts[1].split('x').collect();
-                let a: usize = ab[0].parse().context("Failed to parse rect width")?;
-                let b: usize = ab[1].parse().context("Failed to parse rect height")?;
-                for r in 0..b {
-                    for c in 0..a {
-                        screen[r][c] = 1;
-                    }
-                }
+    while i < input.len() {
+        let ch = input.as_bytes()[i] as char;
+        if ch.is_whitespace() {
+            i += 1;
+            continue;
+        }
+        if ch == '(' {
+            let mut j = i + 1;
+            while j < input.len() && (input.as_bytes()[j] as char) != ')' {
+                j += 1;
             }
-            "rotate" => {
-                let kind = parts[1];
-                let coord: Vec<&str> = parts[2].split('=').collect();
-                let idx: usize = coord[1].parse().context("Failed to parse rotate index")?;
-                let by: usize = parts[4].parse().context("Failed to parse rotate amount")?;
-                if kind == "row" {
-                    let by = by % WIDTH;
-                    screen[idx].rotate_right(by);
-                } else if kind == "column" {
-                    let by = by % HEIGHT;
-                    let mut col: Vec<u8> = (0..HEIGHT).map(|r| screen[r][idx]).collect();
-                    col.rotate_right(by);
-                    for r in 0..HEIGHT {
-                        screen[r][idx] = col[r];
-                    }
-                }
+            if j == input.len() {
+                return Err(anyhow::anyhow!("Unclosed marker at {}", i));
             }
-            _ => return Err(anyhow!("Invalid instruction: {}", line)),
+            let marker_str = &input[(i + 1)..j];
+            let parts: Vec<&str> = marker_str.split('x').collect();
+            if parts.len() != 2 {
+                return Err(anyhow::anyhow!("Invalid marker: {}", marker_str));
+            }
+            let data_len: usize = parts[0]
+                .parse()
+                .context(format!("Parse len: {}", parts[0]))?;
+            let repeat: u64 = parts[1]
+                .parse()
+                .context(format!("Parse rep: {}", parts[1]))?;
+            let data_start = j + 1;
+            let data_end = data_start + data_len;
+            if data_end > input.len() {
+                return Err(anyhow::anyhow!(
+                    "Data overrun: need {} from {}, total {}",
+                    data_len,
+                    data_start,
+                    input.len()
+                ));
+            }
+            let data = &input[data_start..data_end];
+            let sub_len = decompressed_length(data)?;
+            length += sub_len * repeat;
+            i = data_end;
+        } else {
+            length += 1;
+            i += 1;
         }
     }
 
-    let mut display = String::new();
-    for row in screen {
-        for &pixel in &row {
-            display.push(if pixel == 1 { '#' } else { '.' });
-        }
-        display.push('\n');
-    }
-    Ok(display)
+    Ok(length)
+}
+
+pub fn solve() -> Result<u64> {
+    let lines = read_lines("input/day9.in")?;
+    let input = lines.into_iter().next().context("Empty input")?;
+    decompressed_length(&input)
 }
