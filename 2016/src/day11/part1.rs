@@ -1,5 +1,6 @@
 use anyhow::{Context, Result};
 use aoc_lib::read_lines;
+use std::collections::HashMap;
 
 #[derive(Clone, Hash, Eq, PartialEq)]
 struct State {
@@ -26,6 +27,14 @@ fn is_valid(gens: &[u8], chips: &[u8]) -> bool {
         }
     }
     true
+}
+
+fn parse_input(lines: &[String]) -> Result<(usize, Vec<u8>, Vec<u8>)> {
+    let mut element_map: HashMap<String, usize> = HashMap::new();
+    let mut next_id = 0;
+    let mut gens: Vec<u8> = Vec::new();
+    let mut chips: Vec<u8> = Vec::new();
+    for (floor, line) in (0..4).zip(lines.iter()) {}
 }
 
 pub fn solve() -> Result<u32> {
