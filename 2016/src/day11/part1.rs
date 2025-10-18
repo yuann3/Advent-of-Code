@@ -62,6 +62,8 @@ fn parse_input(lines: &[String]) -> Result<(usize, Vec<u8>, Vec<u8>)> {
                     gens.resize(id + 1, 0);
                 }
                 gens[id] = floor as u8;
+            } else if kind == "microchip" {
+
             }
         }
     }
