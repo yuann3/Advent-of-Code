@@ -34,7 +34,37 @@ fn parse_input(lines: &[String]) -> Result<(usize, Vec<u8>, Vec<u8>)> {
     let mut next_id = 0;
     let mut gens: Vec<u8> = Vec::new();
     let mut chips: Vec<u8> = Vec::new();
-    for (floor, line) in (0..4).zip(lines.iter()) {}
+    for (floor, line) in (0..4).zip(lines.iter()) {
+        let content = match line.split("contains ").nth(1) {
+            Some(c) => c.trim_end_matches('.'),
+            None => continue,
+        };
+        if content == "nothing relevant" {
+            continue;
+        }
+        let content = content.replace("and " , ", ");
+        let items: Vec<&str> = content.split(", ").collect();
+        for item in items {
+            let words: Vec<&str> = item.split_whitespace().collect();
+            if words.len() < 2 {
+                continue;
+            }
+            let name = words[1];
+            let kind = words[2];
+            if kind == "generator" {
+                let elem = name.to_string();
+                let if = *element_map.entry(elem).or_insert_with(|| {
+                    let if = next_id;
+                    next_id += 1;
+                    id
+                });
+                if gens.len() <= id {
+                    gens.resize(id + 1, 0);
+                }
+                gens[id] = floor as u8;
+            }
+        }
+    }
 }
 
 pub fn solve() -> Result<u32> {
