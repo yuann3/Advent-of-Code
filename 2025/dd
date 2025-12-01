@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Hardcoded year
+YEAR=2025
+
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <day>"
+    exit 1
+fi
+
+# Assign the argument to a variable
+DAY=$1
+
+# Construct the input and puzzle file paths
+INPUT_FILE="input/day${DAY}.in"
+PUZZLE_FILE="puzzles/day${DAY}.md"
+
+# Run the aoc command to download input and puzzle
+aoc -d "$DAY" -y "$YEAR" -i "$INPUT_FILE" -p "$PUZZLE_FILE" download
