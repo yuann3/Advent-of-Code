@@ -27,6 +27,7 @@ fn run_day(day: &str) -> Result<()> {
         "2" => {
             println!("Day 2:");
             println!("Part 1: {}", day2::part1::solve()?);
+            println!("Part 2: {}", day2::part2::solve()?);
         }
         _ => println!("Day not implemented"),
     }

@@ -1,27 +1,70 @@
-use aoc_lib::read_lines;
-use anyhow::Result;
+use aoc_lib::read_single_line;
+use anyhow::{Context, Result};
+use std::str::FromStr;
 
-pub fn solve() -> Result<i64> {
-    let lines = read_lines("input/day1.in")?;
+struct SearchRange {
+    start: u64,
+    end: u64,
+}
 
-    let (_, clicks) = lines.iter().fold((50i64, 0i64), |(pos, clicks), line| {
-        let (dir, amt_str) = line.split_at(1);
-        let amt = amt_str.parse::<i64>().unwrap_or(0);
+impl FromStr for SearchRange {
+    type Err = anyhow::Error;
 
-        match dir {
-            "R" => {
-                let next = pos + amt;
-                let new_clicks = next.div_euclid(100) - pos.div_euclid(100);
-                (next, clicks + new_clicks)
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let (start_str, end_str) = s
+            .split_once('-')
+            .context("Invalid range format: missing '-'")?;
+        Ok(SearchRange {
+            start: start_str.parse()?,
+            end: end_str.parse()?,
+        })
+    }
+}
+
+pub fn solve() -> Result<u64> {
+    let ranges: Vec<SearchRange> = read_single_line("input/day2.in", ",")?;
+
+    let total_sum = ranges
+        .into_iter()
+        .flat_map(|r| r.start..=r.end)
+        .filter(|&id| is_invalid_id(id))
+        .sum();
+
+    Ok(total_sum)
+}
+
+fn is_invalid_id(n: u64) -> bool {
+    if n < 10 {
+        return false;
+    }
+
+    let mut temp = n;
+    let mut len = 0;
+    while temp > 0 {
+        temp /= 10;
+        len += 1;
+    }
+
+    for k in 1..=(len / 2) {
+        if len % k == 0 {
+            let base_pow = 10u64.pow(k);
+            let repetitions = len / k;
+            
+            let mut r = 0u64;
+            for _ in 0..repetitions {
+                if let Some(next_r) = r.checked_mul(base_pow) {
+                    r = next_r + 1;
+                } else {
+                    r = 0;
+                    break; 
+                }
             }
-            "L" => {
-                let next = pos - amt;
-                let new_clicks = (pos - 1).div_euclid(100) - (next - 1).div_euclid(100);
-                (next, clicks + new_clicks)
+
+            if r > 0 && n % r == 0 {
+                return true;
             }
-            _ => (pos, clicks),
         }
-    });
+    }
 
-    Ok(clicks)
+    false
 }
