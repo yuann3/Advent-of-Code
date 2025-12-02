@@ -2,6 +2,7 @@ use anyhow::Result;
 use std::env;
 
 mod day1;
+mod day2;
 
 fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
@@ -23,10 +24,10 @@ fn run_day(day: &str) -> Result<()> {
             println!("Part 1: {}", day1::part1::solve()?);
             println!("Part 2: {}", day1::part2::solve()?);
         }
-        // "2" => {
-        //     println!("Day 2:");
-        //     println!("Part 1: {}", day2::part1::solve()?);
-        // }
+        "2" => {
+            println!("Day 2:");
+            println!("Part 1: {}", day2::part1::solve()?);
+        }
         _ => println!("Day not implemented"),
     }
     Ok(())
