@@ -1,5 +1,5 @@
-use aoc_lib::read_lines;
 use anyhow::Result;
+use aoc_lib::read_lines;
 
 pub fn solve() -> Result<i64> {
     let lines = read_lines("input/day1.in")?;

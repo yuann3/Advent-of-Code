@@ -1,5 +1,5 @@
-use aoc_lib::read_single_line;
 use anyhow::{Context, Result};
+use aoc_lib::read_single_line;
 use std::str::FromStr;
 
 struct SearchRange {
@@ -49,14 +49,14 @@ fn is_invalid_id(n: u64) -> bool {
         if len % k == 0 {
             let base_pow = 10u64.pow(k);
             let repetitions = len / k;
-            
+
             let mut r = 0u64;
             for _ in 0..repetitions {
                 if let Some(next_r) = r.checked_mul(base_pow) {
                     r = next_r + 1;
                 } else {
                     r = 0;
-                    break; 
+                    break;
                 }
             }
 

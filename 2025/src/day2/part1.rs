@@ -1,5 +1,5 @@
-use aoc_lib::read_single_line;
 use anyhow::{Context, Result};
+use aoc_lib::read_single_line;
 use std::str::FromStr;
 
 struct SearchRange {
