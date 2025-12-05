@@ -23,8 +23,9 @@ pub fn solve() -> Result<u32> {
                 .filter(|(dr, dc)| {
                     let nr = r as i32 + dr;
                     let nc = c as i32 + dc;
-                    nr >= 0 && nc >= 0 
-                        && (nr as usize) < rows 
+                    nr >= 0
+                        && nc >= 0
+                        && (nr as usize) < rows
                         && (nc as usize) < cols
                         && grid[nr as usize][nc as usize] == '@'
                 })
