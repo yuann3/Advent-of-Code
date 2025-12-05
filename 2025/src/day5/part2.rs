@@ -1,54 +1,32 @@
 use anyhow::Result;
 use aoc_lib::read_lines;
 
-pub fn solve() -> Result<u32> {
-    let mut grid: Vec<Vec<char>> = read_lines("input/day4.in")?
+pub fn solve() -> Result<u64> {
+    let lines = read_lines("input/day5.in")?;
+
+    let mut ranges: Vec<(u64, u64)> = lines
         .iter()
-        .map(|line| line.chars().collect())
+        .take_while(|line| line.contains('-'))
+        .map(|line| {
+            let (a, b) = line.split_once('-').unwrap();
+            (a.parse().unwrap(), b.parse().unwrap())
+        })
         .collect();
 
-    let rows = grid.len();
-    let cols = grid[0].len();
-    let mut total = 0;
+    ranges.sort_by_key(|&(lo, _)| lo);
 
-    loop {
-        let mut removed = vec![];
-
-        for r in 0..rows {
-            for c in 0..cols {
-                if grid[r][c] != '@' {
-                    continue;
-                }
-
-                let neighbors = (-1..=1)
-                    .flat_map(|dr| (-1..=1).map(move |dc| (dr, dc)))
-                    .filter(|&(dr, dc)| (dr, dc) != (0, 0))
-                    .filter(|(dr, dc)| {
-                        let nr = r as i32 + dr;
-                        let nc = c as i32 + dc;
-                        nr >= 0
-                            && nc >= 0
-                            && (nr as usize) < rows
-                            && (nc as usize) < cols
-                            && grid[nr as usize][nc as usize] == '@'
-                    })
-                    .count();
-
-                if neighbors < 4 {
-                    removed.push((r, c));
-                }
+    let mut merged: Vec<(u64, u64)> = vec![];
+    for (lo, hi) in ranges {
+        if let Some(last) = merged.last_mut() {
+            if lo <= last.1 + 1 {
+                last.1 = last.1.max(hi);
+                continue;
             }
         }
-
-        if removed.is_empty() {
-            break;
-        }
-
-        total += removed.len() as u32;
-        for (r, c) in removed {
-            grid[r][c] = '.';
-        }
+        merged.push((lo, hi));
     }
 
-    Ok(total)
+    let count: u64 = merged.iter().map(|(lo, hi)| hi - lo + 1).sum();
+
+    Ok(count)
 }
