@@ -20,7 +20,6 @@ pub fn solve() -> Result<u64> {
         let chars: Vec<char> = (0..height).map(|r| get(r, col)).collect();
 
         if chars.iter().all(|&c| c == ' ') {
-            // separator - calculate and reset
             if !nums.is_empty() {
                 let result = match op {
                     '+' => nums.iter().sum(),
@@ -38,7 +37,6 @@ pub fn solve() -> Result<u64> {
             op = last;
         }
 
-        // read column top-to-bottom as digits of a number
         let num_str: String = chars[..height - 1]
             .iter()
             .filter(|c| c.is_ascii_digit())
@@ -49,7 +47,6 @@ pub fn solve() -> Result<u64> {
         }
     }
 
-    // handle last problem
     if !nums.is_empty() {
         let result = match op {
             '+' => nums.iter().sum(),
