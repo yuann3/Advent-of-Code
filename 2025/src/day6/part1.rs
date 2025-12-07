@@ -20,7 +20,7 @@ pub fn solve() -> Result<u64> {
 
     for x in 0..width {
         let is_content = !col_is_empty[x];
-        
+
         match (block_start, is_content) {
             (None, true) => {
                 block_start = Some(x);

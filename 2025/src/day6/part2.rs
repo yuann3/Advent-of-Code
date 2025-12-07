@@ -4,12 +4,15 @@ use aoc_lib::read_lines;
 pub fn solve() -> Result<u64> {
     let lines = read_lines("input/day6.in")?;
     let grid: Vec<Vec<char>> = lines.iter().map(|l| l.chars().collect()).collect();
-    
+
     let max_width = grid.iter().map(|row| row.len()).max().unwrap_or(0);
     let height = grid.len();
 
     let get = |r: usize, c: usize| -> char {
-        grid.get(r).and_then(|row| row.get(c)).copied().unwrap_or(' ')
+        grid.get(r)
+            .and_then(|row| row.get(c))
+            .copied()
+            .unwrap_or(' ')
     };
 
     let mut total: u64 = 0;
