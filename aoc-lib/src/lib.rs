@@ -6,6 +6,18 @@ use std::str::FromStr;
 pub mod benchmark;
 pub use benchmark::*;
 
+pub mod math;
+pub use math::{gcd, lcm};
+
+pub mod parsing;
+pub use parsing::{extract_numbers, extract_ints};
+
+pub mod grid;
+pub use grid::Grid;
+
+pub mod pathfinding;
+pub use pathfinding::{bfs, dijkstra};
+
 /// Reads lines from a file and returns a vector of non-empty strings.
 ///
 /// # Arguments
@@ -18,7 +30,7 @@ pub use benchmark::*;
 ///
 /// # Examples
 ///
-/// ```
+/// ```no_run
 /// use aoc_lib::read_lines;
 ///
 /// let lines = read_lines("example.txt").unwrap();
@@ -55,7 +67,7 @@ pub fn read_lines<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
 ///
 /// # Examples
 ///
-/// ```
+/// ```no_run
 /// use aoc_lib::read_lines_keep_empty;
 ///
 /// // Reading a file with section separators
@@ -93,7 +105,7 @@ pub fn read_lines_keep_empty<P: AsRef<Path>>(path: P) -> Result<Vec<String>> {
 ///
 /// # Examples
 ///
-/// ```
+/// ```no_run
 /// use aoc_lib::read_to_char;
 ///
 /// let chars = read_to_char("example.txt").unwrap();
@@ -124,7 +136,7 @@ pub fn read_to_char<P: AsRef<Path>>(path: P) -> Result<Vec<char>> {
 ///
 /// # Examples
 ///
-/// ```
+/// ```no_run
 /// use aoc_lib::read_single_line;
 ///
 /// let numbers: Vec<i32> = read_single_line("numbers.txt", ",").unwrap();
@@ -172,7 +184,7 @@ where
 ///
 /// # Examples
 ///
-/// ```
+/// ```no_run
 /// use aoc_lib::read_one_per_line;
 ///
 /// let numbers: Vec<i32> = read_one_per_line("numbers.txt").unwrap();
